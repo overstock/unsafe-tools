@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alexkasko.unsafe.offheaplong;
+package com.alexkasko.unsafe.offheapint;
 
 import com.alexkasko.unsafe.offheap.OffHeapDisposableIterator;
 import com.alexkasko.unsafe.offheap.OffHeapUtils;
@@ -29,8 +29,8 @@ import com.alexkasko.unsafe.offheap.OffHeapUtils;
  * @author alexkasko
  * Date: 7/3/13
  */
-class OffHeapLongIterator implements OffHeapDisposableIterator<Long> {
-    private final OffHeapLongAddressable data;
+class OffHeapIntegerIterator implements OffHeapDisposableIterator<Integer> {
+    private final OffHeapIntAddressable data;
     private final long size;
     private long index = 0;
 
@@ -39,7 +39,7 @@ class OffHeapLongIterator implements OffHeapDisposableIterator<Long> {
      *
      * @param data offheap long collection
      */
-    OffHeapLongIterator(OffHeapLongAddressable data) {
+    OffHeapIntegerIterator(OffHeapIntAddressable data) {
         this.data = data;
         this.size = data.size();
     }
@@ -56,7 +56,7 @@ class OffHeapLongIterator implements OffHeapDisposableIterator<Long> {
      * {@inheritDoc}
      */
     @Override
-    public Long next() {
+    public Integer next() {
         if (index >= size) throw new IllegalStateException(
                 "Current index: [" + index + "] is greater or equal then collection size: [" + size + "]");
         return data.get(index++);

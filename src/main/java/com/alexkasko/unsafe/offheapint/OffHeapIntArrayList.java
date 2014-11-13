@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alexkasko.unsafe.offheaplong;
+package com.alexkasko.unsafe.offheapint;
 
 import com.alexkasko.unsafe.offheap.OffHeapDisposable;
 import com.alexkasko.unsafe.offheap.OffHeapDisposableIterator;
@@ -40,9 +40,9 @@ import com.alexkasko.unsafe.offheap.OffHeapMemory;
  * @author alexkasko
  *         Date: 3/1/13
  */
-public class OffHeapLongArrayList implements OffHeapLongAddressable, OffHeapDisposable, Iterable<Long> {
-    private static final int MIN_CAPACITY_INCREMENT = 12;
-    private static final int ELEMENT_LENGTH = 8;
+public class OffHeapIntArrayList implements OffHeapIntAddressable, OffHeapDisposable, Iterable<Integer> {
+    private static final int MIN_CAPACITY_INCREMENT = 24;
+    private static final int ELEMENT_LENGTH = 4;
 
     private OffHeapMemory ohm;
     private long size;
@@ -51,7 +51,7 @@ public class OffHeapLongArrayList implements OffHeapLongAddressable, OffHeapDisp
     /**
      * Constructor, {@code 12} is used as initial capacity
      */
-    public OffHeapLongArrayList() {
+    public OffHeapIntArrayList() {
         this(MIN_CAPACITY_INCREMENT);
     }
 
@@ -60,7 +60,7 @@ public class OffHeapLongArrayList implements OffHeapLongAddressable, OffHeapDisp
      *
      * @param capacity initial capacity
      */
-    public OffHeapLongArrayList(long capacity) {
+    public OffHeapIntArrayList(long capacity) {
         this.capacity = capacity;
         this.ohm = OffHeapMemory.allocateMemory(capacity * ELEMENT_LENGTH);
     }
@@ -71,7 +71,7 @@ public class OffHeapLongArrayList implements OffHeapLongAddressable, OffHeapDisp
      *
      * @param value value to add
      */
-    public void add(long value) {
+    public void add(int value) {
         OffHeapMemory oh = ohm;
         long s = size;
         if (s == capacity) {
@@ -103,21 +103,21 @@ public class OffHeapLongArrayList implements OffHeapLongAddressable, OffHeapDisp
      * @return long value
      */
     @Override
-    public long get(long index) {
+    public int get(long index) {
         assert index < size : index;
-        return ohm.getLong(index * ELEMENT_LENGTH);
+        return ohm.getInt(index * ELEMENT_LENGTH);
     }
 
     /**
      * Sets the element at position {@code index} (from {@code 0} to {@code size-1}) to the given value
      *
      * @param index list index
-     * @param value long value
+     * @param value int value
      */
     @Override
-    public void set(long index, long value) {
+    public void set(long index, int value) {
         assert index < size : index;
-        ohm.putLong(index * ELEMENT_LENGTH, value);
+        ohm.putInt(index * ELEMENT_LENGTH, value);
     }
 
     /**
@@ -151,8 +151,8 @@ public class OffHeapLongArrayList implements OffHeapLongAddressable, OffHeapDisp
      * {@inheritDoc}
      */
     @Override
-    public OffHeapDisposableIterator<Long> iterator() {
-        return new OffHeapLongIterator(this);
+    public OffHeapDisposableIterator<Integer> iterator() {
+        return new OffHeapIntegerIterator(this);
     }
 
     /**
@@ -169,7 +169,7 @@ public class OffHeapLongArrayList implements OffHeapLongAddressable, OffHeapDisp
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("OffHeapLongArrayList");
+        sb.append("OffHeapIntArrayList");
         sb.append("{size=").append(size());
         sb.append(", capacity=").append(capacity);
         sb.append(", unsafe=").append(isUnsafe());
